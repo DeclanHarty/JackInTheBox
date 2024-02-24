@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
         if(velocity == Vector2.zero){
             return;
         }else{
-            transform.localScale = new Vector2(Mathf.Abs(velocity.x)/velocity.x, transform.localScale.y);
+            //transform.localScale = new Vector3(Mathf.Abs(velocity.x)/(velocity.x != 0 ? velocity.x : 1), transform.localScale.y);
         }
     }
 }
