@@ -482,9 +482,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 4d83a247785d6544882297d31e79c003, type: 3}
   - {fileID: 21300000, guid: 093ebac42217cee498c619484f080c73, type: 3}
   - {fileID: 21300000, guid: f1a01deebd264694a815d98f60ca9940, type: 3}
-  numOfClowns: 5
+  numOfClowns: 100
   currentSize: 0
-  attackDelay: 0.5
+  attackDelay: 0.1
 --- !u!114 &594387529
 MonoBehaviour:
   m_ObjectHideFlags: 0

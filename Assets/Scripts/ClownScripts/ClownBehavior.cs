@@ -38,13 +38,17 @@ public class ClownBehavior : MonoBehaviour
         if(rb.velocity == Vector2.zero){
             return;
         }else{
-            transform.localScale = new Vector2(Mathf.Abs(rb.velocity.x)/rb.velocity.x, transform.localScale.y);
+            transform.localScale = new Vector2(transform.localScale.x * Mathf.Abs(rb.velocity.x)/rb.velocity.x, transform.localScale.y);
         }
     }
 
     void FixedUpdate(){
         if(nearestEnemy == null){
-            rb.velocity = Vector2.zero;
+            if(allyOpposite != Vector2.zero){
+                rb.velocity += allyOpposite.normalized * bumpSpeed * Time.deltaTime;
+            }else{
+                rb.velocity = Vector2.zero;
+            }
             return;
         }
 

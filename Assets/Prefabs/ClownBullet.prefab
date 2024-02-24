@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6533759225339016041}
   - component: {fileID: -3737601277449409470}
   - component: {fileID: 2284102445475261098}
+  - component: {fileID: 3751760608202130960}
   m_Layer: 0
   m_Name: ClownBullet
   m_TagString: Untagged
@@ -46,8 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e59fd18d93d70a34586ddcda382e3543, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  airTime: 1
+  speed: 15
+  airTime: 0.5
   clown: {fileID: 967601702138854945, guid: 79ed6d224eb01104dae1cfc1195591ac, type: 3}
 --- !u!50 &2284102445475261098
 Rigidbody2D:
@@ -70,6 +71,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!58 &3751760608202130960
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6533759225339016038}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &6533759225569862484
 GameObject:
   m_ObjectHideFlags: 0

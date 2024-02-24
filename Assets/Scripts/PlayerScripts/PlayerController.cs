@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
         Vector2 attackDirection = (mousePositionInWorld - new Vector2(transform.position.x, transform.position.y)).normalized;
 
 
-        if(Input.GetMouseButtonDown(0) && isAbleToAttack && numOfClowns > 1){
+        if(Input.GetMouseButton(0) && isAbleToAttack && numOfClowns > 1){
             numOfClowns--;
             playerAttack.Attack(attackDirection);
             isAbleToAttack = false;
