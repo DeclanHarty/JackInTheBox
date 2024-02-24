@@ -2,9 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Enum to make accessing ClownGroupSprites indices easier
+enum GroupSizes
+{
+    Group1 = 0,
+    Group5 = 1,
+    Group10 = 2,
+    Group20 = 3,
+    Group50 = 4
+}
+
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Movement movement;
+    [SerializeField] private List<Sprite>ClownGroupSprites = new List<Sprite>(); // List of various sizes of clown groups
+    [SerializeField] private int numOfClowns = 1; // Int to track number of clowns
 
     private Vector2 input;
 
