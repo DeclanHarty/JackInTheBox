@@ -27,14 +27,9 @@ public class EnemyCheck : MonoBehaviour
                     currentClosestGameObject = hit.transform.gameObject;
                 }
             }
-            Debug.Log(currentClosestGameObject);
         }
         //return hit.transform.gameObject; 
-        return gameObject;
-    }
-
-    void Update(){
-        CheckForNearestEnemy();
+        return currentClosestGameObject;
     }
 
 }
