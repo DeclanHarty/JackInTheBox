@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Movement movement;
     [SerializeField] private List<Sprite>ClownGroupSprites = new List<Sprite>(); // List of various sizes of clown groups
     [SerializeField] private int numOfClowns = 1; // Int to track number of clowns
+    [SerializeField] private GroupSizes currentSize = GroupSizes.Group1; // Current group sprite to use
 
     private Vector2 input;
 
