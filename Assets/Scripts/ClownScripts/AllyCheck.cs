@@ -17,10 +17,10 @@ public class AllyCheck : MonoBehaviour
     public Vector2 FindAllyDirectionSumOpposite(){
         RaycastHit2D[] raycastHits = Physics2D.CircleCastAll(transform.position, checkRadius, Vector3.forward, 0, LayerMask.GetMask(layerMask));
 
-        Vector2 allyDifferenceSum = Vector2.zero;
+        Vector3 allyDifferenceSum = Vector3.zero;
         foreach(RaycastHit2D hit in raycastHits){
 
-            allyDifferenceSum = (hit.transform.position - transform.position);
+            allyDifferenceSum += (hit.transform.position - transform.position);
         }
 
         Vector2 allyOpposite = -1f * allyDifferenceSum.normalized;

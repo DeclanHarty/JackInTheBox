@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 // Enum to make accessing ClownGroupSprites indices easier
@@ -16,17 +15,11 @@ enum GroupSizes
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Movement movement;
-    [SerializeField] private List<Sprite> clownGroupSprites = new List<Sprite>(); // List of various sizes of clown groups
+    [SerializeField] private List<Sprite>ClownGroupSprites = new List<Sprite>(); // List of various sizes of clown groups
     [SerializeField] private int numOfClowns = 1; // Int to track number of clowns
     [SerializeField] private GroupSizes currentSize = GroupSizes.Group1; // Current group sprite to use
-    [SerializeField] private SpriteRenderer spriteRenderer;
 
     private Vector2 input;
-
-    void Start()
-    {
-
-    }
 
     void FixedUpdate(){
         movement.Move();
@@ -34,9 +27,16 @@ public class PlayerController : MonoBehaviour
 
     void Update(){
         movement.GetInput(new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")));
-    }
 
-    // Adds (or subtracts) a given number to the player's number of clowns
+        Vector2 velocity = movement.GetVelocity();
+        // Flips sprite depending on velocity
+        if(velocity == Vector2.zero){
+            return;
+        }else{
+            transform.localScale = new Vector2(Mathf.Abs(velocity.x)/velocity.x, transform.localScale.y);
+        }
+    }
+        // Adds (or subtracts) a given number to the player's number of clowns
     public void AddClowns(int numToAdd)
     {
         // Add the clowns
@@ -73,9 +73,6 @@ public class PlayerController : MonoBehaviour
             // Set to 50 clowns sprite
             spriteRenderer.sprite = clownGroupSprites[(int)GroupSizes.Group50];
         }
-    }
-
-    
 
     // TODO: Do player death stuff
     void OnDeath()

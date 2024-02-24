@@ -20,11 +20,10 @@ public class CollisionManager : MonoBehaviour
     {
         foreach (CollisionInfo box in boxes)
         {
-            // If 1. The box is closed, and 2. The player and box are colliding: Open the box and add 5 clowns
-            if (box.gameObject.GetComponent<BoxController>().isClosed && Vector2.Distance(player.position, box.position) < player.radius + box.radius)
+            // If the player collides with a box, call its OpenBox() method
+            if (Vector2.Distance(player.position, box.position) < player.radius + box.radius)
             {
                 box.gameObject.GetComponent<BoxController>().OpenBox();
-                player.gameObject.GetComponent<PlayerController>().AddClowns(5);
             }
         }
     }

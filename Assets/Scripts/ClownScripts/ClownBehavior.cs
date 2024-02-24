@@ -10,12 +10,18 @@ public class ClownBehavior : MonoBehaviour
     [SerializeField] private float bumpSpeed;
 
     [SerializeField] private float minDistanceToEnemy;
+
+    private bool isAbleToAttack;
+    [SerializeField] private int attackDamage;
+    [SerializeField] private float attackInterval;
     private EnemyCheck enemyCheck;
 
     private AllyCheck allyCheck;
 
     private GameObject nearestEnemy;
     private Vector2 allyOpposite;
+
+    private ClownState state;
     // Start is called before the first frame update
     void Start(){
         rb = GetComponent<Rigidbody2D>();
@@ -27,6 +33,13 @@ public class ClownBehavior : MonoBehaviour
     {
         nearestEnemy = enemyCheck.CheckForNearestEnemy();
         allyOpposite = allyCheck.FindAllyDirectionSumOpposite();
+
+        // Flips Sprite depending on Velocity
+        if(rb.velocity == Vector2.zero){
+            return;
+        }else{
+            transform.localScale = new Vector2(Mathf.Abs(rb.velocity.x)/rb.velocity.x, transform.localScale.y);
+        }
     }
 
     void FixedUpdate(){
@@ -37,19 +50,71 @@ public class ClownBehavior : MonoBehaviour
 
         Vector3 enemyPosition = nearestEnemy.transform.position;
 
-        if(Vector2.Distance(enemyPosition, transform.position) > 1.5f && allyOpposite == Vector2.zero){
+        if(Vector2.Distance(enemyPosition, transform.position) > 1.5f){
+            Vector2 directionToEnemy = (enemyPosition - transform.position);
+            directionToEnemy.Normalize();
 
-            if(allyOpposite == Vector2.zero){
-                Vector2 directionToEnemy = (enemyPosition - transform.position);
-                directionToEnemy.Normalize();
+            if(allyOpposite == Vector2.zero){    
                 rb.velocity = directionToEnemy * speed;
             }else{
-                rb.velocity += allyOpposite * bumpSpeed;
+                rb.velocity += allyOpposite.normalized * bumpSpeed * Time.deltaTime;
             } 
             Debug.Log(rb.velocity);
+        }else if(isAbleToAttack == false){
+            rb.velocity = Vector2.zero;
+            isAbleToAttack = true;
+            Attack();
         }else{
             rb.velocity = Vector2.zero;
         }
-        
     }
+
+    void Attack(){
+        Debug.Log("Attack");
+        if(isAbleToAttack && nearestEnemy != null){
+            bool enemyIsDead = nearestEnemy.GetComponent<EnemyBehavior>().TakeDamage(attackDamage);
+            if(!enemyIsDead){
+                Invoke("Attack", attackInterval);
+            }else{
+                isAbleToAttack = false;
+            }
+        } 
+    }
+
+    public Rigidbody2D GetRigidbody(){
+        return rb;
+    }
+
+    public Transform GetTransform(){
+        return transform;
+    }
+
+    public EnemyCheck GetEnemyCheck(){
+        return enemyCheck;
+    }
+
+    public AllyCheck GetAllyCheck(){
+        return allyCheck;
+    }
+
+    public int GetAttackDamage(){
+        return attackDamage;
+    }
+
+    public float GetAttackInterval(){
+        return attackInterval;
+    }
+
+    public float GetSpeed(){
+        return speed;
+    }
+
+    public float GetBumpSpeed(){
+        return bumpSpeed;
+    }
+
+
+    
+
+    
 }
