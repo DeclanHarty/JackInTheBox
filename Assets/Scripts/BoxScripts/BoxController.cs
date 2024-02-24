@@ -8,6 +8,8 @@ public class BoxController : MonoBehaviour
     [SerializeField] private SpriteRenderer closedSprite; // Opened/Closed SpriteRenderers; will be activated/deactivated depending on state
     [SerializeField] private SpriteRenderer openedSprite;
 
+    [SerializeField] private int clownValue;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,5 +38,13 @@ public class BoxController : MonoBehaviour
         // Disable openedSprite and enable closedSprite
         openedSprite.enabled = false;
         closedSprite.enabled = true;
+    }
+
+    void OnTriggerEnter2D(Collider2D col){
+        Debug.Log("Col");
+        if(col.gameObject.tag == "Player"){
+            OpenBox();
+            col.gameObject.GetComponent<PlayerController>().AddClowns(clownValue);
+        }
     }
 }

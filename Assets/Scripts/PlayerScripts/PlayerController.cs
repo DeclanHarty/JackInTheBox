@@ -75,6 +75,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    
+
     // TODO: Do player death stuff
     void OnDeath()
     {
