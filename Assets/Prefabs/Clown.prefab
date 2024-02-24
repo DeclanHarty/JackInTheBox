@@ -80,7 +80,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25e5853533dff45d4ba5a01975120a9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkRadius: 1
+  checkRadius: 0.75
   layerMask: Player
 --- !u!50 &967601702138854957
 Rigidbody2D:
@@ -118,7 +118,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 0.75
 --- !u!1 &6675186148730900681
 GameObject:
   m_ObjectHideFlags: 0
