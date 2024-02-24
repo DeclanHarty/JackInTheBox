@@ -19,4 +19,8 @@ public class Movement : MonoBehaviour
         this.input = input;
         this.input.Normalize();
     }
+
+    public Vector2 GetVelocity(){
+        return rb.velocity;
+    }
 }
