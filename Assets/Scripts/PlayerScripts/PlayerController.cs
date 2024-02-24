@@ -26,5 +26,13 @@ public class PlayerController : MonoBehaviour
 
     void Update(){
         movement.GetInput(new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")));
+
+        Vector2 velocity = movement.GetVelocity();
+        // Flips sprite depending on velocity
+        if(velocity == Vector2.zero){
+            return;
+        }else{
+            transform.localScale = new Vector2(Mathf.Abs(velocity.x)/velocity.x, transform.localScale.y);
+        }
     }
 }
