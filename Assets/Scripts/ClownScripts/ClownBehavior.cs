@@ -59,7 +59,6 @@ public class ClownBehavior : MonoBehaviour
             }else{
                 rb.velocity += allyOpposite.normalized * bumpSpeed * Time.deltaTime;
             } 
-            Debug.Log(rb.velocity);
         }else if(isAbleToAttack == false){
             rb.velocity = Vector2.zero;
             isAbleToAttack = true;
@@ -70,7 +69,6 @@ public class ClownBehavior : MonoBehaviour
     }
 
     void Attack(){
-        Debug.Log("Attack");
         if(isAbleToAttack && nearestEnemy != null){
             bool enemyIsDead = nearestEnemy.GetComponent<EnemyBehavior>().TakeDamage(attackDamage);
             if(!enemyIsDead){
