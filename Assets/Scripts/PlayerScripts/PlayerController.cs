@@ -19,7 +19,6 @@ public class PlayerController : MonoBehaviour
 
 
     [SerializeField] private int numOfClowns = 1; // Int to track number of clowns
-    [SerializeField] private int maxNumOfClowns = 100; //Maximum number of clowns
     [SerializeField] private GroupSizes currentSize = GroupSizes.Group1; // Current group sprite to use
     [SerializeField] private List<Sprite> clownGroupSprites; // List of various levels of group size
     private SpriteRenderer spriteRenderer; // Player's SpriteRenderer
@@ -31,8 +30,6 @@ public class PlayerController : MonoBehaviour
     private bool isAbleToAttack;
 
     private List<GameObject> activeClowns; 
-
-    [SerializeField] private Bar clownBar;
 
     void Start(){
         movement = GetComponent<Movement>();
@@ -94,7 +91,6 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("isMoving", false);
         }
 
-        if(clownBar != null) clownBar.UpdateBar(numOfClowns, maxNumOfClowns);
     }
 
     private void ResetAttack(){
