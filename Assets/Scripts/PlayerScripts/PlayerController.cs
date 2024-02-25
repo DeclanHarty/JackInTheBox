@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private List<Sprite> clownGroupSprites; // List of various levels of group size
     private SpriteRenderer spriteRenderer; // Player's SpriteRenderer
     
+    [SerializeField] private GameObject sprite;
 
     private Vector2 input;
 
@@ -37,12 +38,11 @@ public class PlayerController : MonoBehaviour
         isAbleToAttack = true;
         playerAttack = GetComponent<QuickfireAttack>();
         activeClowns = new List<GameObject>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     void FixedUpdate(){
         movement.Move();
-        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y * .1f);
     }
 
     void Update(){
@@ -70,12 +70,16 @@ public class PlayerController : MonoBehaviour
             CallClowns();
         }
 
+        sprite.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y * .1f);
         // Flips sprite depending on velocity
-        if(velocity.x == 0){
-            return;
-        }else{
-            transform.localScale = new Vector3(Mathf.Abs(velocity.x)/(velocity.x != 0 ? velocity.x : 1), transform.localScale.y);
-        } 
+        if (velocity.x > 0.1)
+        {
+            spriteRenderer.flipX = false;
+        }
+        else if (velocity.x < -0.1)
+        {
+            spriteRenderer.flipX = true;
+        }
 
     }
 
@@ -131,6 +135,10 @@ public class PlayerController : MonoBehaviour
             // Set to 50 clowns sprite
             spriteRenderer.sprite = clownGroupSprites[(int)GroupSizes.Group50];
         }
+    }
+
+    void OnCollisionEnter2D(Collision2D col){
+        Debug.Log(col.gameObject.name);
     }
 
     // TODO: Do player death stuff
