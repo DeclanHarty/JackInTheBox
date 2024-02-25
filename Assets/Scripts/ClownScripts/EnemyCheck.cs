@@ -31,4 +31,11 @@ public class EnemyCheck : MonoBehaviour
         return currentClosestGameObject;
     }
 
+    void OnCollisionEnter2D(Collision2D col){
+        if(col.gameObject.tag == "Player"){
+            Debug.Log("Quit");
+            Application.Quit();
+        }
+    }
+
 }
