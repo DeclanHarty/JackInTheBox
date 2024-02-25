@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
             CallClowns();
         }
 
-        sprite.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y * .1f);
+        sprite.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y * .01f);
         // Flips sprite depending on velocity
         if (velocity.x > 0.1)
         {

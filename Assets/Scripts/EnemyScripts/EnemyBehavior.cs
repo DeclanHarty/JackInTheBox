@@ -44,6 +44,7 @@ public class EnemyBehavior : MonoBehaviour
     }
 
     void FixedUpdate(){
+        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y * .1f);
         if(nearestEnemy == null){
             rb.velocity = Vector2.zero;
             return;
