@@ -13,10 +13,10 @@ public class GameManager : MonoBehaviour
     public GameObject[] points;
     public List<GameObject> pointsBeyond = new List<GameObject>();
 
-    List<GameObject> leftPoints = new List<GameObject>();
-    List<GameObject> rightPoints = new List<GameObject>();
-    List<GameObject> upPoints = new List<GameObject>();
-    List<GameObject> downPoints = new List<GameObject>();
+    public List<GameObject> leftPoints = new List<GameObject>();
+    public List<GameObject> rightPoints = new List<GameObject>();
+    public List<GameObject> upPoints = new List<GameObject>();
+    public List<GameObject> downPoints = new List<GameObject>();
 
     GameObject currentPoint;
 
@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     protected Vector2 halfCameraSize = Vector2.zero;
     #endregion
 
-    Vector2 direction = Vector2.zero;
+    public Vector2 direction = Vector2.zero;
     // Start is called before the first frame update
     void Start()
     {
@@ -42,12 +42,14 @@ public class GameManager : MonoBehaviour
         //  Calcuale the half size of the Camera
         halfCameraSize.y = Camera.main.orthographicSize;
         halfCameraSize.x = halfCameraSize.y * Camera.main.aspect;
+
+        FindPointsInDifferentDirectionsSetup();
     }
     bool hasMoved;
+    public bool cameraNotMoving;
     // Update is called once per frame
     void Update()
     {
-        FindPointsInDifferentDirections();
         Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, new Vector3(currentPoint.transform.position.x,currentPoint.transform.position.y,Camera.main.transform.position.z), Time.deltaTime * 5);
         if(OutOfBounds())
         {
@@ -62,8 +64,13 @@ public class GameManager : MonoBehaviour
         else
         {
             hasMoved = false;
-            pointsBeyond.Clear();
+            direction = Vector2.zero;
         }
+        
+        FindPointsInDifferentDirectionsSetup();
+        //FindPointsInDifferentDirectionsUpdate();
+
+        //cameraNotMoving = Camera.main.transform.position == new Vector3(currentPoint.transform.position.x,currentPoint.transform.position.y,Camera.main.transform.position.z);
             
     }
 
@@ -89,7 +96,7 @@ public class GameManager : MonoBehaviour
     {
         if (player.transform.position.x < Camera.main.transform.position.x - halfCameraSize.x)
             return Vector2.left;
-        if (player.transform.position.x > Camera.main.transform.position.x + halfCameraSize.x )
+        if (player.transform.position.x > Camera.main.transform.position.x + halfCameraSize.x)
             return Vector2.right;
 
         if(player.transform.position.y < Camera.main.transform.position.y - halfCameraSize.y)
@@ -99,7 +106,7 @@ public class GameManager : MonoBehaviour
         return Vector2.zero;
     }
 
-    void FindPointsInDifferentDirections()
+    void FindPointsInDifferentDirectionsSetup()
     {
         leftPoints.Clear();
         rightPoints.Clear();
@@ -111,47 +118,93 @@ public class GameManager : MonoBehaviour
             foreach(GameObject point in points)
             {
                 if(point.transform.position.x < Camera.main.transform.position.x - halfCameraSize.x) //Left
+                    //if(!leftPoints.Contains(point))
                     leftPoints.Add(point);
 
                 if(point.transform.position.x > Camera.main.transform.position.x + halfCameraSize.x) //Right
+                    //if(!rightPoints.Contains(point))
                     rightPoints.Add(point);
 
                 if(point.transform.position.y < Camera.main.transform.position.y - halfCameraSize.y) //Down
+                    //if(!downPoints.Contains(point))
                     downPoints.Add(point);
 
                 if(point.transform.position.y > Camera.main.transform.position.y + halfCameraSize.y) //Up
+                    //if(!upPoints.Contains(point))
                     upPoints.Add(point);
-
             }
         }
     }
 
     void FindAllPointsInCurrentDirection()
     {
-        pointsBeyond.Clear();
+        //pointsBeyond.Clear();
 
-            if(direction == Vector2.left)
-                pointsBeyond = leftPoints;
-            else if(direction == Vector2.right)
-                pointsBeyond = rightPoints;
-            else if(direction == Vector2.down)
-                pointsBeyond = downPoints;
-            else if(direction == Vector2.up)
-                pointsBeyond = upPoints;
-
-        if(pointsBeyond.Count != 0)
-        {
             float z = Mathf.Infinity;
-            foreach(GameObject point in pointsBeyond)
+            GameObject previousPoint = currentPoint;
+            if(direction == Vector2.left)
             {
-                float distance = Vector3.Distance(point.transform.position, player.transform.position);
-                if(distance < z)
+                foreach(GameObject point in leftPoints)
                 {
-                    z = distance;
-                    currentPoint = point;
+                    float distance = Vector3.Distance(point.transform.position, player.transform.position);
+                    if(distance < z)
+                    {
+                        z = distance;
+                        currentPoint = point;
+                    }
                 }
-            }
-        }
 
+            }
+            else if(direction == Vector2.right)
+            {
+                foreach(GameObject point in rightPoints)
+                {
+                    float distance = Vector3.Distance(point.transform.position, player.transform.position);
+                    if(distance < z)
+                    {
+                        z = distance;
+                        currentPoint = point;
+                    }
+                }
+
+            }
+            else if(direction == Vector2.down)
+            {
+                foreach(GameObject point in downPoints)
+                {
+                    float distance = Vector3.Distance(point.transform.position, player.transform.position);
+                    if(distance < z)
+                    {
+                        z = distance;
+                        currentPoint = point;
+                    }
+                }
+
+            }
+            else if(direction == Vector2.up)
+            {
+                foreach(GameObject point in upPoints)
+                {
+                    float distance = Vector3.Distance(point.transform.position, player.transform.position);
+                    if(distance < z)
+                    {
+                        z = distance;
+                        currentPoint = point;
+                    }
+                }
+
+            }
+    }
+
+    bool CheckMatch(List<GameObject> l1, List<GameObject> l2) 
+    {
+        if (l1.Count != l2.Count)
+            return false;
+        
+        for (int i = 0; i < l1.Count; i++) {
+            if (l1[i] != l2[i])
+                return false;
+            }
+        return true;
     }
 }
