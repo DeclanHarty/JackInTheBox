@@ -27,14 +27,19 @@ public class PlayerController : MonoBehaviour
     private bool isAbleToAttack;
     [SerializeField] private float attackDelay;
 
+    private List<GameObject> activeClowns; 
+
     void Start(){
         movement = GetComponent<Movement>();
         playerAttack = GetComponent<PlayerAttack>();
         isAbleToAttack = true;
+        playerAttack = GetComponent<QuickfireAttack>();
+        activeClowns = new List<GameObject>();
     }
 
     void FixedUpdate(){
         movement.Move();
+        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y * .1f);
     }
 
     void Update(){
@@ -45,12 +50,21 @@ public class PlayerController : MonoBehaviour
         Vector2 mousePositionInWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 attackDirection = (mousePositionInWorld - new Vector2(transform.position.x, transform.position.y)).normalized;
 
+        if(Input.GetKeyDown("1")){
+            playerAttack = GetComponent<QuickfireAttack>();
+        }
 
-        if(Input.GetMouseButton(0) && isAbleToAttack && numOfClowns > 1){
-            numOfClowns--;
-            playerAttack.Attack(attackDirection);
+
+        if(Input.GetMouseButton(0) && isAbleToAttack && numOfClowns > playerAttack.GetMinNumberOfClowns()){
+            numOfClowns-= playerAttack.GetMinNumberOfClowns();
+            GameObject bullet = playerAttack.Attack(attackDirection);
+            bullet.GetComponent<ClownBulletBehavior>().SetPlayer(this);
             isAbleToAttack = false;
             Invoke("ResetAttack", attackDelay);
+        }
+
+        if(Input.GetKeyDown("space")){
+            CallClowns();
         }
 
         // Flips sprite depending on velocity
@@ -64,5 +78,17 @@ public class PlayerController : MonoBehaviour
 
     private void ResetAttack(){
         isAbleToAttack = true;
+    }
+
+    private void CallClowns(){
+        foreach(GameObject clown in activeClowns){
+            clown.GetComponent<ClownBehavior>().Return();
+        }
+        numOfClowns += activeClowns.Count;
+        activeClowns = new List<GameObject>();
+    }
+
+    public void AddClownToActive(GameObject clown){
+        activeClowns.Add(clown);
     }
 }

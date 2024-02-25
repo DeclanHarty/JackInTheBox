@@ -10,6 +10,8 @@ public class ClownBulletBehavior : MonoBehaviour
     [SerializeField] private float airTime;
 
     [SerializeField] private GameObject clown;
+
+    private PlayerController player;
     
 
     void Start(){
@@ -22,7 +24,8 @@ public class ClownBulletBehavior : MonoBehaviour
     }
 
     void MakeClown(){
-        Instantiate(clown, transform.position, Quaternion.identity);
+        GameObject activeClown = Instantiate(clown, transform.position, Quaternion.identity);
+        player.AddClownToActive(activeClown);
         Destroy(gameObject);
     }
 
@@ -30,6 +33,10 @@ public class ClownBulletBehavior : MonoBehaviour
         if(col.gameObject.tag == "Enemy"){
             MakeClown();
         }
+    }
+
+    public void SetPlayer(PlayerController player){
+        this.player = player;
     }
 
 }
