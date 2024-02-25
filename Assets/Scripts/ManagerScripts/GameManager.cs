@@ -11,12 +11,12 @@ public class GameManager : MonoBehaviour
     bool inFightingState;
 
     public GameObject[] points;
-    public List<GameObject> pointsBeyond = new List<GameObject>();
+    List<GameObject> pointsBeyond = new List<GameObject>();
 
-    public List<GameObject> leftPoints = new List<GameObject>();
-    public List<GameObject> rightPoints = new List<GameObject>();
-    public List<GameObject> upPoints = new List<GameObject>();
-    public List<GameObject> downPoints = new List<GameObject>();
+    List<GameObject> leftPoints = new List<GameObject>();
+    List<GameObject> rightPoints = new List<GameObject>();
+    List<GameObject> upPoints = new List<GameObject>();
+    List<GameObject> downPoints = new List<GameObject>();
 
     GameObject currentPoint;
 
@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     protected Vector2 halfCameraSize = Vector2.zero;
     #endregion
 
-    public Vector2 direction = Vector2.zero;
+    Vector2 direction = Vector2.zero;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,7 +46,6 @@ public class GameManager : MonoBehaviour
         FindPointsInDifferentDirectionsSetup();
     }
     bool hasMoved;
-    public bool cameraNotMoving;
     // Update is called once per frame
     void Update()
     {
@@ -66,7 +65,7 @@ public class GameManager : MonoBehaviour
             hasMoved = false;
             direction = Vector2.zero;
         }
-        
+
         FindPointsInDifferentDirectionsSetup();
         //FindPointsInDifferentDirectionsUpdate();
 
