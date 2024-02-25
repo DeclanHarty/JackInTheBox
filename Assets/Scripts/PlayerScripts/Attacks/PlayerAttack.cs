@@ -10,10 +10,16 @@ public abstract class PlayerAttack : MonoBehaviour
 
     [SerializeField] private int minNumberOfClowns;
 
+    [SerializeField] private float attackDelay;
+
     public abstract GameObject Attack(Vector3 direction);
 
     public int GetMinNumberOfClowns(){
         return minNumberOfClowns;
+    }
+
+    public float GetAttackDelay(){
+        return attackDelay;
     }
 
 }
