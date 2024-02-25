@@ -28,7 +28,6 @@ public class PlayerController : MonoBehaviour
     private Vector2 input;
 
     private bool isAbleToAttack;
-    [SerializeField] private float attackDelay;
 
     private List<GameObject> activeClowns; 
 
@@ -63,7 +62,7 @@ public class PlayerController : MonoBehaviour
             GameObject bullet = playerAttack.Attack(attackDirection);
             bullet.GetComponent<ClownBulletBehavior>().SetPlayer(this);
             isAbleToAttack = false;
-            Invoke("ResetAttack", attackDelay);
+            Invoke("ResetAttack", playerAttack.GetAttackDelay());
         }
 
         if(Input.GetKeyDown("space")){

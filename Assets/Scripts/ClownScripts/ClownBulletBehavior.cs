@@ -7,6 +7,7 @@ public class ClownBulletBehavior : MonoBehaviour
     private Rigidbody2D rb;
 
     [SerializeField] private float speed;
+    [SerializeField] private int bulletDamage;
     [SerializeField] private float airTime;
 
     [SerializeField] private GameObject clown;
@@ -30,8 +31,11 @@ public class ClownBulletBehavior : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D col){
-        if(col.gameObject.tag == "Enemy"){
+        if(col.gameObject.tag != "Player"){
             MakeClown();
+        }
+        if(col.gameObject.tag == "Enemy"){
+            col.gameObject.GetComponent<EnemyBehavior>().TakeDamage(bulletDamage);
         }
     }
 
