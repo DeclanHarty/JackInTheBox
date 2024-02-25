@@ -43,8 +43,12 @@ public class BoxController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col){
         Debug.Log("Col");
         if(col.gameObject.tag == "Player"){
-            OpenBox();
-            col.gameObject.GetComponent<PlayerController>().AddClowns(clownValue);
+            if(isClosed) {
+                OpenBox();
+                col.gameObject.GetComponent<PlayerController>().AddClowns(clownValue);
+            }
+            
+            
         }
     }
 }
