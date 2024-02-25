@@ -99,13 +99,19 @@ public class ClownBehavior : MonoBehaviour
 
     void Attack(){
         if(isAbleToAttack && nearestEnemy != null){
+            animator.SetTrigger("Attack");
             bool enemyIsDead = nearestEnemy.GetComponent<EnemyBehavior>().TakeDamage(attackDamage);
             if(!enemyIsDead){
                 Invoke("Attack", attackInterval);
             }else{
+                
                 isAbleToAttack = false;
             }
-        } 
+        } else{
+            
+        }
+        animator.SetTrigger("EnemyIsDead");
+        
     }
 
     public void Return(){
