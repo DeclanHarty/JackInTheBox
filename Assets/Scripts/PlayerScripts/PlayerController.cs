@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 // Enum to make accessing ClownGroupSprites indices easier
 enum GroupSizes
@@ -27,6 +28,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject sprite;
 
     public Bar clownBar;
+    public TMP_Text clownNum;
 
     private Vector2 input;
 
@@ -94,6 +96,7 @@ public class PlayerController : MonoBehaviour
             animator.SetBool("isMoving", false);
         }
         if(clownBar != null) clownBar.UpdateBar(numOfClowns, maxNumOfClowns);
+        if(clownNum != null) clownNum.text = numOfClowns.ToString();
     }
 
     private void ResetAttack(){

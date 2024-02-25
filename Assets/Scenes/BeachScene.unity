@@ -605,7 +605,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 20, y: 20}
+  m_Size: {x: 17.76, y: 16.3}
   m_EdgeRadius: 0
 --- !u!1 &405852230
 GameObject:
@@ -760,6 +760,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: f1a01deebd264694a815d98f60ca9940, type: 3}
   sprite: {fileID: 1323724357}
   clownBar: {fileID: 486238527}
+  clownNum: {fileID: 847535829}
 --- !u!114 &431381395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1006,6 +1007,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4954148007738569358, guid: ad6b694d2c633e7499907cf186a0f9e1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5276294055310633218, guid: ad6b694d2c633e7499907cf186a0f9e1, type: 3}
+      propertyPath: m_enableAutoSizing
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9198836162867513842, guid: ad6b694d2c633e7499907cf186a0f9e1, type: 3}
@@ -1286,6 +1291,17 @@ MonoBehaviour:
   - {fileID: 1216974125}
   - {fileID: 1801822637}
   - {fileID: 917758688}
+--- !u!114 &847535829 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 378720026469911268, guid: ad6b694d2c633e7499907cf186a0f9e1, type: 3}
+  m_PrefabInstance: {fileID: 486238526}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &917758688
 GameObject:
   m_ObjectHideFlags: 0
