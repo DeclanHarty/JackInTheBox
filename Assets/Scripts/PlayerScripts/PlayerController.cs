@@ -18,9 +18,11 @@ public class PlayerController : MonoBehaviour
     private PlayerAttack playerAttack;
 
 
-    [SerializeField] private List<Sprite>ClownGroupSprites = new List<Sprite>(); // List of various sizes of clown groups
     [SerializeField] private int numOfClowns = 1; // Int to track number of clowns
     [SerializeField] private GroupSizes currentSize = GroupSizes.Group1; // Current group sprite to use
+    [SerializeField] private List<Sprite> clownGroupSprites; // List of various levels of group size
+    private SpriteRenderer spriteRenderer; // Player's SpriteRenderer
+    
 
     private Vector2 input;
 
@@ -35,6 +37,7 @@ public class PlayerController : MonoBehaviour
         isAbleToAttack = true;
         playerAttack = GetComponent<QuickfireAttack>();
         activeClowns = new List<GameObject>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void FixedUpdate(){
@@ -128,6 +131,7 @@ public class PlayerController : MonoBehaviour
             // Set to 50 clowns sprite
             spriteRenderer.sprite = clownGroupSprites[(int)GroupSizes.Group50];
         }
+    }
 
     // TODO: Do player death stuff
     void OnDeath()
