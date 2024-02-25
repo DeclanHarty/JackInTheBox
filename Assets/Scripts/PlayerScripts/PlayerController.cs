@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GroupSizes currentSize = GroupSizes.Group1; // Current group sprite to use
     [SerializeField] private List<Sprite> clownGroupSprites; // List of various levels of group size
     private SpriteRenderer spriteRenderer; // Player's SpriteRenderer
-    
+    private Animator animator;
     [SerializeField] private GameObject sprite;
 
     private Vector2 input;
@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
         playerAttack = GetComponent<QuickfireAttack>();
         activeClowns = new List<GameObject>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
 
     void FixedUpdate(){
@@ -78,6 +79,12 @@ public class PlayerController : MonoBehaviour
         else if (velocity.x < -0.1)
         {
             spriteRenderer.flipX = true;
+        }
+
+        if(PlayerIsMoving()){
+            animator.SetBool("isMoving", true);
+        }else {
+            animator.SetBool("isMoving", false);
         }
 
     }
@@ -138,6 +145,18 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col){
         Debug.Log(col.gameObject.name);
+    }
+
+    public bool PlayerIsMoving(){
+        if(movement.GetVelocity() != Vector2.zero){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public SpriteRenderer GetSpriteRenderer(){
+        return spriteRenderer;
     }
 
     // TODO: Do player death stuff
