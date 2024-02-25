@@ -21,6 +21,8 @@ public class ClownBehavior : MonoBehaviour
     private GameObject nearestEnemy;
     private Vector2 allyOpposite;
 
+    private Animator animator;
+
     [SerializeField] private PlayerController player;
 
     private ClownState state;
@@ -29,6 +31,7 @@ public class ClownBehavior : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         enemyCheck = GetComponent<EnemyCheck>();
         allyCheck = GetComponent<AllyCheck>();
+        animator = GetComponent<Animator>();
     }
     // Update is called once per frame
     void Update()
@@ -50,6 +53,12 @@ public class ClownBehavior : MonoBehaviour
         else if (rb.velocity.x < -0.1)
         {
             GetComponentInChildren<SpriteRenderer>().flipX = true;
+        }
+
+        if(Mathf.Abs(rb.velocity.x) > 0.1f){
+            animator.SetBool("isMoving", true);
+        }else{
+            animator.SetBool("isMoving", false);
         }
     }
 

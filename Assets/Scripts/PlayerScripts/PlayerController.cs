@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 // Enum to make accessing ClownGroupSprites indices easier
 enum GroupSizes
@@ -19,20 +20,21 @@ public class PlayerController : MonoBehaviour
 
 
     [SerializeField] private int numOfClowns = 1; // Int to track number of clowns
-    [SerializeField] private int maxNumOfClowns = 1000; //Maximum number of clowns
+    [SerializeField] private int maxNumOfClowns = 100; // Int to track number of clowns
     [SerializeField] private GroupSizes currentSize = GroupSizes.Group1; // Current group sprite to use
     [SerializeField] private List<Sprite> clownGroupSprites; // List of various levels of group size
     private SpriteRenderer spriteRenderer; // Player's SpriteRenderer
     private Animator animator;
     [SerializeField] private GameObject sprite;
 
+    public Bar clownBar;
+    public TMP_Text clownNum;
+
     private Vector2 input;
 
     private bool isAbleToAttack;
 
     private List<GameObject> activeClowns; 
-
-    [SerializeField] private Bar clownBar;
 
     void Start(){
         movement = GetComponent<Movement>();
@@ -41,7 +43,10 @@ public class PlayerController : MonoBehaviour
         playerAttack = GetComponent<QuickfireAttack>();
         activeClowns = new List<GameObject>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
         animator = GetComponent<Animator>();
+
+        if(clownBar != null) clownBar.UpdateBar(numOfClowns, maxNumOfClowns, true);
     }
 
     void FixedUpdate(){
@@ -62,7 +67,8 @@ public class PlayerController : MonoBehaviour
 
 
         if(Input.GetMouseButton(0) && isAbleToAttack && numOfClowns > playerAttack.GetMinNumberOfClowns()){
-            numOfClowns-= playerAttack.GetMinNumberOfClowns();
+            numOfClowns -= playerAttack.GetMinNumberOfClowns();
+            numOfClowns = Mathf.Clamp(numOfClowns, 1, maxNumOfClowns);
             GameObject bullet = playerAttack.Attack(attackDirection);
             bullet.GetComponent<ClownBulletBehavior>().SetPlayer(this);
             isAbleToAttack = false;
@@ -89,8 +95,8 @@ public class PlayerController : MonoBehaviour
         }else {
             animator.SetBool("isMoving", false);
         }
-
-        if(clownBar != null) clownBar.percent = numOfClowns/maxNumOfClowns;
+        if(clownBar != null) clownBar.UpdateBar(numOfClowns, maxNumOfClowns);
+        if(clownNum != null) clownNum.text = numOfClowns.ToString();
     }
 
     private void ResetAttack(){
@@ -102,6 +108,7 @@ public class PlayerController : MonoBehaviour
             clown.GetComponent<ClownBehavior>().Return();
         }
         numOfClowns += activeClowns.Count;
+        numOfClowns = Mathf.Clamp(numOfClowns, 1, maxNumOfClowns);
         activeClowns = new List<GameObject>();
     }
 
@@ -113,6 +120,7 @@ public class PlayerController : MonoBehaviour
     {
         // Add the clowns
         numOfClowns += numToAdd;
+        numOfClowns = Mathf.Clamp(numOfClowns, 1, maxNumOfClowns);
 
         // If the new total goes below one: do death stuff (TODO)
         if (numOfClowns < 1)
