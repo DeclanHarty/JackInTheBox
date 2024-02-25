@@ -70,6 +70,7 @@ MonoBehaviour:
   attackDamage: 5
   attackInterval: 0.75
   player: {fileID: 0}
+  sprite: {fileID: 6675186148730900681}
 --- !u!114 &967601702138854956
 MonoBehaviour:
   m_ObjectHideFlags: 0

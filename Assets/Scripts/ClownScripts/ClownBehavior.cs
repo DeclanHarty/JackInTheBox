@@ -25,6 +25,8 @@ public class ClownBehavior : MonoBehaviour
 
     [SerializeField] private PlayerController player;
 
+    [SerializeField] private GameObject sprite;
+
     private ClownState state;
     // Start is called before the first frame update
     void Start(){
@@ -32,6 +34,7 @@ public class ClownBehavior : MonoBehaviour
         enemyCheck = GetComponent<EnemyCheck>();
         allyCheck = GetComponent<AllyCheck>();
         animator = GetComponent<Animator>();
+
     }
     // Update is called once per frame
     void Update()
@@ -69,7 +72,7 @@ public class ClownBehavior : MonoBehaviour
             }else{
                 rb.velocity = Vector2.zero;
             }
-            transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y * .1f);
+            sprite.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.y * .001f);
             return;
         }
 
