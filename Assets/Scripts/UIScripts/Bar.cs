@@ -6,13 +6,12 @@ using UnityEngine.UI;
 public class Bar : MonoBehaviour
 {
     public Image fillImage;
-    private int maxHealth = 1;
-    private float barHealth = 1;
+    private float percent = 1;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        fillImage.fillAmount = percent;
     }
 
     // Update is called once per frame
@@ -20,21 +19,18 @@ public class Bar : MonoBehaviour
     {
         if(fillImage != null)
         {
-            fillImage.fillAmount = Mathf.Lerp(fillImage.fillAmount, barHealth, Time.deltaTime * 2);
+            
+            fillImage.fillAmount = Mathf.Lerp(fillImage.fillAmount, percent, Time.deltaTime * 2);
+            //fillImage.fillAmount = percent;
         }
     }
 
-    public void UpdateBar(int health)
+    public void UpdateBar(int curAmount, int maxAmount, bool startUp = false)
     {
-        health = Mathf.Clamp(health, 0, maxHealth);
+        percent = (float)curAmount/(float)maxAmount;
+        percent = Mathf.Clamp(percent, 0, 1);
 
-        barHealth = health/maxHealth;
-        barHealth = Mathf.Clamp(barHealth, 0.000000001f, 1);
-    }
-
-    public void SetBarVariables(int maxAmount, int currentHealth = 0)
-    {
-        maxHealth = maxAmount;
-        UpdateBar(currentHealth != 0 ? currentHealth : maxHealth);
+        if(startUp)
+            fillImage.fillAmount = percent;
     }
 }
