@@ -13,7 +13,6 @@ public class EnemyCheck : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, checkRadius);
     }
 
-
     public GameObject CheckForNearestEnemy(){
         RaycastHit2D[] raycastHits = Physics2D.CircleCastAll(transform.position, checkRadius, Vector3.forward, 0, LayerMask.GetMask(layerMask));
 

@@ -10,6 +10,7 @@ public class EnemyBehavior : MonoBehaviour
 
     private Rigidbody2D rb;
     private EnemyCheck enemyCheck;
+    private Animator animator;
 
     private GameObject nearestEnemy;
 
@@ -19,11 +20,27 @@ public class EnemyBehavior : MonoBehaviour
         health = maxHealth;
         rb = GetComponent<Rigidbody2D>();
         enemyCheck = GetComponent<EnemyCheck>();
+        animator = GetComponent<Animator>();
     }
     // Update is called once per frame
     void Update()
     {
         nearestEnemy = enemyCheck.CheckForNearestEnemy();
+        if(rb.velocity != Vector2.zero){
+            animator.SetBool("isMoving", true);
+        }else{
+            animator.SetBool("isMoving", false);
+        }
+
+        if (rb.velocity.x > 0.1)
+        {
+            GetComponentInChildren<SpriteRenderer>().flipX = false;
+        }
+        else if (rb.velocity.x < -0.1)
+        {
+            GetComponentInChildren<SpriteRenderer>().flipX = true;
+        }
+        
     }
 
     void FixedUpdate(){
