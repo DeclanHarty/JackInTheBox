@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6d1a41208ca92b6458afb5a43db4e266
+guid: 7ed84d223a20718438d8d75469763e03
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,11 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-<<<<<<< HEAD
   spritePixelsToUnits: 100
-=======
-  spritePixelsToUnits: 200
->>>>>>> parent of 5d520bb (Added PlayerAnim)
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
