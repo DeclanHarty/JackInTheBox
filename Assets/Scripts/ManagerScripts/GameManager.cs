@@ -70,6 +70,12 @@ public class GameManager : MonoBehaviour
         //FindPointsInDifferentDirectionsUpdate();
 
         //cameraNotMoving = Camera.main.transform.position == new Vector3(currentPoint.transform.position.x,currentPoint.transform.position.y,Camera.main.transform.position.z);
+
+        if(PureOutOfBounds())
+        {
+            //Debug.Log("Touching the edge");
+            DontWalkOffEdge();
+        }
             
     }
 
@@ -91,6 +97,19 @@ public class GameManager : MonoBehaviour
         return false;
 	}
 
+    bool PureOutOfBounds()
+    {
+        if (player.transform.position.x > Camera.main.transform.position.x + halfCameraSize.x - (player.transform.localScale.x/2)|| player.transform.position.x < Camera.main.transform.position.x - halfCameraSize.x + (player.transform.localScale.x/2))
+        {
+            return true;
+        }
+        if (player.transform.position.y > Camera.main.transform.position.y + halfCameraSize.y - (player.transform.localScale.y/2)|| player.transform.position.y < Camera.main.transform.position.y - halfCameraSize.y + (player.transform.localScale.y/2))
+        {
+            return true;
+        }
+        return false;
+    }
+
     Vector2 SearchForDirection()
     {
         if (player.transform.position.x < Camera.main.transform.position.x - halfCameraSize.x)
@@ -101,6 +120,20 @@ public class GameManager : MonoBehaviour
         if(player.transform.position.y < Camera.main.transform.position.y - halfCameraSize.y)
             return Vector2.down;
         if (player.transform.position.y > Camera.main.transform.position.y + halfCameraSize.y)
+            return Vector2.up;
+        return Vector2.zero;
+    }
+
+    Vector2 BoundsSearchForDirection()
+    {
+        if (player.transform.position.x < Camera.main.transform.position.x - halfCameraSize.x + (player.transform.localScale.x/2))
+            return Vector2.left;
+        if (player.transform.position.x > Camera.main.transform.position.x + halfCameraSize.x - (player.transform.localScale.x/2))
+            return Vector2.right;
+
+        if(player.transform.position.y < Camera.main.transform.position.y - halfCameraSize.y + (player.transform.localScale.y/2))
+            return Vector2.down;
+        if (player.transform.position.y > Camera.main.transform.position.y + halfCameraSize.y - (player.transform.localScale.y/2))
             return Vector2.up;
         return Vector2.zero;
     }
@@ -193,6 +226,45 @@ public class GameManager : MonoBehaviour
                 }
 
             }
+    }
+
+    void DontWalkOffEdge()
+    {
+        Vector2 position = BoundsSearchForDirection();
+
+        float x = player.transform.position.x;
+        float y = player.transform.position.y;
+
+        if(position == Vector2.left)
+        {
+            if(leftPoints.Count == 0)
+            {
+                x = Camera.main.transform.position.x - halfCameraSize.x + (player.transform.localScale.x/2);
+            }
+        }
+        else if(position == Vector2.right)
+        {
+            if(rightPoints.Count == 0)
+            {
+                x = Camera.main.transform.position.x + halfCameraSize.x - (player.transform.localScale.x/2);
+            }
+        }
+        else if(position == Vector2.up)
+        {
+            if(upPoints.Count == 0)
+            {
+                y = Camera.main.transform.position.y + halfCameraSize.y - (player.transform.localScale.y/2);
+            }
+        }
+        else if(position == Vector2.down)
+        {
+            if(downPoints.Count == 0)
+            {
+                y = Camera.main.transform.position.y - halfCameraSize.y + (player.transform.localScale.y/2);
+            }
+        }
+
+        player.transform.position = new Vector3(x,y,player.transform.position.z);
     }
 
     bool CheckMatch(List<GameObject> l1, List<GameObject> l2) 
